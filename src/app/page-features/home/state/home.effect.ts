@@ -5,6 +5,7 @@ import { HomeService } from '../service/home.service';
 import { mergeMap, catchError,map, } from 'rxjs/operators';
 
 import { of } from 'rxjs';
+import { LoadProfile } from './home.actions';
 @Injectable()
 export class HomeEffect {
     constructor(
@@ -14,7 +15,7 @@ export class HomeEffect {
     loadProfile$ = createEffect(()=>
     this.actions$.pipe(
         // ofType(homeActions.HomeActionTypes.LoadProfile),
-        ofType<homeActions.LoadProfile>(),
+        ofType<LoadProfile>(homeActions.HomeActionTypes.LoadProfile),
         mergeMap(action => 
             this._service.getProfile(action.payload).pipe(
                 map(data=> (new homeActions.LoadSucces(data))),

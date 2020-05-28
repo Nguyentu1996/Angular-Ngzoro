@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import * as fromHome from '../state/home.selector';
+import * as fromHome from '../../home/state/home.selector';
 import { Observable } from 'rxjs';
 import { Profile } from '../model/profilePayload';
 @Component({

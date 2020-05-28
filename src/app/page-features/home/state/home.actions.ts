@@ -1,7 +1,6 @@
 //ngrx action
 import { Action } from '@ngrx/store';
 import { Profile } from '../model/profilePayload';
-import { type } from 'os';
 export enum HomeActionTypes{
     LoadProfile = "[Home] Load profile",
     LoadSucces = "[Home] Load success",
