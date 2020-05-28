@@ -3,16 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+   
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([])
   ],
-  providers: [],
+  providers: [  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
