@@ -18,10 +18,9 @@ export class ProfileInfoComponent implements OnInit {
   ngOnInit(): void {
     this.profile$.subscribe(data=>{
       if(data != null ){
-        this.cd.markForCheck()
+        this.cd.markForCheck();
       }
     })
-    
   }
 
 }
