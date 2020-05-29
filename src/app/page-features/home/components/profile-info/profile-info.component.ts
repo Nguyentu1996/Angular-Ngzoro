@@ -15,11 +15,11 @@ profile : Profile;
 
   ngOnInit(): void {
     // this.profile$.pipe(filter(v => v !== undefined && null));
-    // this.profile$.subscribe(data=>{
-    //   if(data != null ){
-    //     this.profile = data;
-    //   }
-    // })
+    this.profile$.subscribe(data=>{
+      if(data != null ){
+        this.profile = data;
+      }
+    })
     
   }
 
