@@ -20,11 +20,8 @@ export class HomeShellComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
     this._store.dispatch(new homeActions.LoadProfile(1));
-    this.profile$ = this._store.pipe(select(fromHome.getProfile()));
-   
-
+    this.profile$ = this._store.pipe(select(fromHome.getProfile()));  
   }
   
 

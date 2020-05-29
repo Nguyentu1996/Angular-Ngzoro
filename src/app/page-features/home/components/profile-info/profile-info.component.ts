@@ -1,23 +1,24 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile } from '../../model/profilePayload';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-info',
   templateUrl: './profile-info.component.html',
-  styleUrls: ['./profile-info.component.css']
+  styleUrls: ['./profile-info.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileInfoComponent implements OnInit {
 @Input() profile$: Observable<Profile>;
-profile : Profile;
-  constructor() { }
-
+// profile : Profile;
+  constructor(
+    private cd : ChangeDetectorRef
+  ) { }
+ 
   ngOnInit(): void {
-    // this.profile$.pipe(filter(v => v !== undefined && null));
     this.profile$.subscribe(data=>{
       if(data != null ){
-        this.profile = data;
+        this.cd.markForCheck()
       }
     })
     

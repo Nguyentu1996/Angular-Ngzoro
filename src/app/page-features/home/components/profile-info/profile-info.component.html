@@ -1,5 +1,4 @@
-<!-- <ng-container *ngIf="(profile$ | async) as profile"> -->
-  <ng-container *ngIf="(profile | json) != '{}'">
+<ng-container *ngIf="(profile$ | async) as profile">
     <nz-descriptions nzTitle="User Info" nzBordered>
       <nz-descriptions-item nzTitle="Name">{{profile.name}}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Create Time">2020</nz-descriptions-item>
