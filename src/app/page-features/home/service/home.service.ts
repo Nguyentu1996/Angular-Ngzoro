@@ -16,7 +16,7 @@ export class HomeService {
 
   public getProfile (id:any){
     return this._http.get<Profile>(`${environment.apiUrl}/api/users/${id}`).pipe(
-      tap(data=>console.log("Data",data)),
+      tap(data=>console.log("Data-Service",data)),
       catchError(this.errorHandle)
     );
   }

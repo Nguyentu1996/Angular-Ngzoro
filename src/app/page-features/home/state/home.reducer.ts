@@ -5,6 +5,7 @@ export interface HomeState{
     profile : Profile;
     error: string;
 }
+
 const initState : HomeState = {
     profile : null,
     error : ''

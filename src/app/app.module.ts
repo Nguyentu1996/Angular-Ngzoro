@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { AntdModule } from './ng-zoro-antd.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +18,7 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    AntdModule,
     HttpClientModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({}),

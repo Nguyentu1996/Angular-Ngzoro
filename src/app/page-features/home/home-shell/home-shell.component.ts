@@ -1,8 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromHome from '../../home/state/home.selector';
+import * as homeActions from '../../home/state/home.actions';
 import { Observable } from 'rxjs';
 import { Profile } from '../model/profilePayload';
+import { filter } from 'rxjs/operators';
+
 @Component({
   selector: 'app-home-shell',
   templateUrl: './home-shell.component.html',
@@ -17,8 +20,11 @@ export class HomeShellComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.profile$ = this._store.pipe(select(fromHome.getProfile));
-    this.profile$.subscribe(data => console.log("Data",data));
+    this._store.dispatch(new homeActions.LoadProfile(1));
+    this.profile$ = this._store.pipe(select(fromHome.getProfile()));
+    this.profile$.pipe(filter(v => v ! == undefined && null));
+
   }
+  
 
 }
