@@ -12,6 +12,8 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AntdModule } from './ng-zoro-antd.module';
 import { StorageServiceModule } from 'ngx-webstorage-service';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -30,6 +32,10 @@ export function httpTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

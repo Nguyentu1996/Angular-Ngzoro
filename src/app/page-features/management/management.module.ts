@@ -4,6 +4,11 @@ import { ManagementShellComponent } from './management-shell/management-shell.co
 import { Routes, RouterModule } from '@angular/router';
 import { ListProfileComponent } from './components/list-profile/list-profile.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { EffectsModule } from '@ngrx/effects';
+import { ManageEffects } from 'src/app/state/effects/manage.effect';
+import * as fromManage from "../../state/reducers/manage.reducer";
+import { StoreModule } from '@ngrx/store';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 const routes : Routes = [
   { path :'',component:ManagementShellComponent}
@@ -14,7 +19,10 @@ const routes : Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NzTableModule
+    NzTableModule,
+    NzDividerModule,
+    StoreModule.forFeature(fromManage.manageFeatureKey,fromManage.reducer),
+    EffectsModule.forFeature([ManageEffects]),
   ]
 })
 export class ManagementModule { }

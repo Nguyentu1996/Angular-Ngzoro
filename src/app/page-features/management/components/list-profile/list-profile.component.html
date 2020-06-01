@@ -1,1 +1,23 @@
 <p>list-profile works!</p>
+<nz-table #basicTable [nzData]="profile">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.surName }}</td>
+        <td>{{ data.phoneNumber }}</td>
+        <td>
+          <!-- <a>Action 一 {{ data.name }}</a> -->
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>

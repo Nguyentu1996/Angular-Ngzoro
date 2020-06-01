@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Profile } from 'src/app/page-features/home/model/profilePayload';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-list-profile',
@@ -7,10 +9,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ListProfileComponent implements OnInit {
-  listOfData = [];
+  @Input() profile : Profile[];
   constructor() { }
 
   ngOnInit(): void {
+    // console.log("Profile",this.profile);
   }
 
 }

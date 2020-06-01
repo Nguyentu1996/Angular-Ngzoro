@@ -4,7 +4,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 // Extends the app state to include the Home feature.
 // This is required because Home are lazy loaded.
 // So the reference to HomeState cannot be added to app.state.ts directly.
-export interface State extends fromRoot.State{
+export interface State extends fromRoot.AppState{
     home : fromHome.HomeState
 }
 // Selector funtions
