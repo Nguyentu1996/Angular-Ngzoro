@@ -9,18 +9,18 @@ import { Profile } from '../../model/profilePayload';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileInfoComponent implements OnInit {
-@Input() profile$: Observable<Profile>;
+@Input() profile: Profile;
 // profile : Profile;
   constructor(
     private cd : ChangeDetectorRef
   ) { }
  
   ngOnInit(): void {
-    this.profile$.subscribe(data=>{
-      if(data != null ){
-        this.cd.markForCheck();
-      }
-    })
+    // this.profile$.subscribe(data=>{
+    //   if(data != null ){
+    //     this.cd.markForCheck();
+    //   }
+    // })
   }
 
 }

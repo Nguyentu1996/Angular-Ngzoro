@@ -25,7 +25,7 @@ const antDesignIcons = AllIcons as {
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 const routes : Routes = [
   { path :'',component:ManagementShellComponent},
-  { path: '/:id',component:ListProfileComponent}
+  { path: 'details/:id',component:ProfileInfoComponent}
   // ProfileInfoComponent
 ]
 
