@@ -1,4 +1,5 @@
-<p>list-profile works!</p>
+<button style="float: right;" nz-button nzType="primary"><i nz-icon nzType="plus-square" nzTheme="outline"></i>
+  Create</button>
 <nz-table #basicTable [nzData]="profile">
     <thead>
       <tr>
@@ -15,9 +16,13 @@
         <td>{{ data.phoneNumber }}</td>
         <td>
           <!-- <a>Action 一 {{ data.name }}</a> -->
+          <a  [routerLink]="['/home',data.id]" routerLinkActive="router-link-active" ><i nz-icon nzType="info" nzTheme="outline"></i></a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a>Delete</a>
-        </td>
+          <a><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+          <nz-divider nzType="vertical"></nz-divider>
+
+         <a><i nz-icon nzType="edit" nzTheme="outline"></i> </a>    
+            </td>
       </tr>
     </tbody>
   </nz-table>

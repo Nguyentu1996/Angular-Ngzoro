@@ -3,7 +3,6 @@ import { Profile } from 'src/app/page-features/home/model/profilePayload';
 
 export const load = createAction(
   '[Manage Page] Load',
-  // props<{profile : Profile[]}>()
 
 );
 export const loadSuccess = createAction(

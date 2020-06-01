@@ -21,8 +21,6 @@ export class ManagementShellComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(fromAction.load());
-    this.profile$.subscribe(data=>console.log("Data",data));
-
   }
-
+ 
 }

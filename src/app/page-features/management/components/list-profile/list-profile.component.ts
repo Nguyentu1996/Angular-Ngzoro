@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -15,5 +15,5 @@ export class ListProfileComponent implements OnInit {
   ngOnInit(): void {
     // console.log("Profile",this.profile);
   }
-
+ 
 }

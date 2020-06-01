@@ -12,12 +12,14 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
 // import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 // import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 // import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
+
+import { ShareProfileModule } from 'src/app/shared/modules/shareProfileInfo.module';
 
 
 const routes : Routes = [
- {path:'',component:HomeShellComponent}
+//  {path:'',component:HomeShellComponent},
+ {path: '',component:HomeShellComponent}
+
 ]
 
 @NgModule({
@@ -26,11 +28,10 @@ const routes : Routes = [
         RouterModule.forChild(routes),
         StoreModule.forFeature('home',reducer),
         EffectsModule.forFeature([HomeEffect]),
-        NzDescriptionsModule,
-        NzBadgeModule
+        ShareProfileModule
     ],
     exports: [],
-    declarations: [ HomeShellComponent,ProfileInfoComponent],
-    providers: [],
+    declarations: [ HomeShellComponent,],
+    providers: [ProfileInfoComponent],
 })
 export class HomeModule { }

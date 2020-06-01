@@ -13,8 +13,16 @@ export const initState : ManageState  = {
 };
 const manageReducer = createReducer(
     initState,
-    on(ManageActions.loadSuccess,state => ({...state,profile:state.profile,error:''})),
-    on(ManageActions.loadFail,state => ({...state,profile:[],error:state.error}))
+    on(ManageActions.loadSuccess, (state,{profile})=> ({
+        ...state,
+        profile:profile,
+        error:''
+    })),
+    on(ManageActions.loadFail,(state,{err}) => ({
+        ...state,
+        profile:[],
+        error:err
+    }))
 );
 export function reducer(state:ManageState|undefined,action:Action){
     return manageReducer(state,action)
