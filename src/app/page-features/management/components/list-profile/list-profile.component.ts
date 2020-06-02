@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
 import { Observable } from 'rxjs/internal/Observable';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-list-profile',
@@ -10,10 +11,24 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class ListProfileComponent implements OnInit {
   @Input() profile : Profile[];
-  constructor() { }
+  @Output() confirmDelete = new EventEmitter();
+  @Output() initCurrentProfile = new EventEmitter();
+  constructor(
+    private nzMess : NzMessageService
+  ) { }
 
   ngOnInit(): void {
     // console.log("Profile",this.profile);
   }
- 
+  cancel(): void {
+  }
+  confirm(id:any):void {
+    console.log("ID-Delete",id);
+    this.confirmDelete.emit(id);
+    this.nzMess.info('click confirm');
+  }
+  setCurrentProfile(id:any){
+    console.log("ID current",id)
+    this.initCurrentProfile.emit(id);
+  }
 }

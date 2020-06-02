@@ -10,5 +10,9 @@ export const selectFeature = createFeatureSelector<fromManage.ManageState>(fromM
 
 export const selectLoadListProfile = createSelector(
     selectFeature,
-    state => state.profile
+    state => state.profiles,
+);
+export const selectInitCurrentProfile = createSelector(
+    selectFeature,
+    state => state.currentProfile
 );

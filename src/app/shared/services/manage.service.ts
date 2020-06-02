@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
 import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
@@ -9,13 +9,53 @@ import { tap, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ManageService {
+  private usersUrl = 'api/users/';
+  private url = `${environment.apiUrl}/${this.usersUrl}`;
 
   constructor(private _http : HttpClient) { }
   public getAllUser(){
-    return this._http.get<Profile[]>(`${environment.apiUrl}/api/users/`).pipe(
+    return this._http.get<Profile[]>(this.url).pipe(
       tap(value => console.log("Data",value)),
       catchError(this.errorHandle)
     )
+  }
+  public createUser(data : Profile){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const newProfile ={
+      ...data,
+      id:null
+    };
+    return this._http.post<Profile>(this.url,newProfile,{headers}).pipe(
+      tap(data => console.log("create Profile",JSON.stringify(data))),
+      catchError(this.errorHandle)
+    )
+  }
+  public updateUser(data : Profile){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${environment.apiUrl}/${this.usersUrl}${data.id}`;
+
+    return  this._http.put<Profile>(url,data,{headers}).pipe(
+      tap(data => console.log("update profile",data)),
+      catchError(this.errorHandle)
+    )
+  }
+  public deleteUser(id:any){
+    console.log("Id service",id);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${environment.apiUrl}/${this.usersUrl}delete/${id}`;
+    return this._http.post<Profile>(url,{headers}).pipe(
+      tap(data => console.log("delete profile",data)),
+      catchError(this.errorHandle)
+    )
+  }
+  public getProfile (id:any){
+    console.log("Id service",id);
+
+    const url = `${environment.apiUrl}/${this.usersUrl}${id}`;
+    return this._http.get<Profile>(url).pipe(
+      tap(data=>console.log("Data-Service",data)),
+      catchError(this.errorHandle)
+    );
   }
   private errorHandle(err){
     let errorMessage : string;

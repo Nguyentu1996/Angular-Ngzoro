@@ -17,11 +17,9 @@ export class HomeShellComponent implements OnInit {
   profile$ : Observable<Profile>;
   constructor(
     private _store : Store<fromHome.State>,
-    private router :ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // this.router.snapshot.params.id
     // remember get localstorage 
     this._store.dispatch(new homeActions.LoadProfile(1));
     this.profile$ = this._store.pipe(select(fromHome.getProfile()));  

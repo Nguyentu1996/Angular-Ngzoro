@@ -16,12 +16,26 @@
         <td>{{ data.phoneNumber }}</td>
         <td>
           <!-- <a>Action 一 {{ data.name }}</a> -->
-          <a  [routerLink]="['./details',data.id]" routerLinkActive="router-link-active" ><i nz-icon nzType="info" nzTheme="outline"></i></a>
+          <a  
+            [routerLink]="['./details',data.id]" routerLinkActive="router-link-active" >
+             <i nz-icon nzType="info" nzTheme="outline"></i>
+          </a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+          <a  
+            [nzIcon]="iconTpl"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this task?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="confirm(data.id)"
+            (nzOnCancel)="cancel()">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </a>
+          <ng-template #iconTpl>
+            <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+          </ng-template>
           <nz-divider nzType="vertical"></nz-divider>
-
-         <a><i nz-icon nzType="edit" nzTheme="outline"></i> </a>    
+          <!-- [routerLink]="['./actions']" routerLinkActive="router-link-active" -->
+         <a (click)="setCurrentProfile(data.id)" ><i nz-icon nzType="edit" nzTheme="outline"></i> </a>    
             </td>
       </tr>
     </tbody>

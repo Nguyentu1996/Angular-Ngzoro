@@ -22,5 +22,11 @@ export class ManagementShellComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(fromAction.load());
   }
- 
+  deleteProfile(e:number){
+    console.log("Dispatch Delete",e);
+    this.store.dispatch(fromAction.delele({id:e}));
+  }
+  setCurrentProfile(e: any){
+    this.store.dispatch(fromAction.getProfileId({id:e}));
+  }
 }

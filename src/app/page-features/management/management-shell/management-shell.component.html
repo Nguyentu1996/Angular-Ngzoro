@@ -1,5 +1,7 @@
 <app-list-profile 
 [profile]="profile$ | async"
+(confirmDelete)="deleteProfile($event)"
+(initCurrentProfile)="setCurrentProfile($event)"
 >
 
 </app-list-profile>

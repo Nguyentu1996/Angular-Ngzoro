@@ -4,24 +4,41 @@ import * as ManageActions from "../actions/manage.actions";
 export const manageFeatureKey = 'manage';
 
 export interface ManageState {
-    profile: Profile[];
+    profiles: Profile[];
     error: string;
+    currentProfile : Profile;
 };
 export const initState : ManageState  = {
-    profile : null,
-    error : ''
+    profiles : null,
+    error : '',
+    currentProfile: null,
 };
 const manageReducer = createReducer(
     initState,
-    on(ManageActions.loadSuccess, (state,{profile})=> ({
+    on(ManageActions.loadSuccess, (state,action)=> ({
         ...state,
-        profile:profile,
-        error:''
+        profiles:action.profiles,
     })),
-    on(ManageActions.loadFail,(state,{err}) => ({
+    on(ManageActions.loadFail,(state,action) => ({
         ...state,
-        profile:[],
-        error:err
+        profiles:[],
+        error:action.err
+    })),
+    on(ManageActions.createSuccess,(state,action)=>({    
+        ...state,
+        profiles : [...state.profiles,action.profile]
+    })),
+    on(ManageActions.updateSuccess,(state,action)=>({
+        ...state,
+        profiles : [...state.profiles.map(item => action.profile.id === item.id ? action.profile : item)]
+    })),
+    on(ManageActions.deleteSuccess,(state,action)=>({
+        ...state,
+        profiles : [...state.profiles.filter(val => val.id != action.id)]
+    })),
+    on(ManageActions.initCurrentProfile,(state,action)=>({
+        ...state,
+        currentProfile: action.profile
     }))
 );
 export function reducer(state:ManageState|undefined,action:Action){

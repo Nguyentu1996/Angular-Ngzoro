@@ -1,26 +1,47 @@
 import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile } from '../../model/profilePayload';
-
+import { ActivatedRoute } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import * as fromHome from "../../state/home.selector";
+import * as homeActions from "../../state/home.actions";
 @Component({
   selector: 'app-profile-info',
   templateUrl: './profile-info.component.html',
   styleUrls: ['./profile-info.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileInfoComponent implements OnInit {
-@Input() profile: Profile;
-// profile : Profile;
+export class ProfileInfoComponent implements OnInit ,OnChanges{
+  @Input() profile: Profile;
+  private id: any;
   constructor(
-    private cd : ChangeDetectorRef
-  ) { }
- 
+    private cd: ChangeDetectorRef,
+    private router: ActivatedRoute,
+    private store: Store<fromHome.State>
+
+
+  ) {
+    this.id = this.router.snapshot.params.id;
+
+  }
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    if(changes.profile){
+      debugger;
+      this.cd.markForCheck();
+    }
+  }
+
+
   ngOnInit(): void {
-    // this.profile$.subscribe(data=>{
-    //   if(data != null ){
-    //     this.cd.markForCheck();
-    //   }
-    // })
+    if (this.id) {
+      this.store.dispatch(new homeActions.LoadProfile(this.id))
+    }
+    this.store.pipe(select(fromHome.getProfile())).subscribe(data => {
+      if (data) {
+        this.profile = data;
+        this.cd.markForCheck();
+      }
+    });
   }
 
 }
