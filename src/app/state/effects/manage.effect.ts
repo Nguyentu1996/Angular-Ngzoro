@@ -48,7 +48,7 @@ export class ManageEffects{
             map((data)=> fromManageActions.deleteSuccess({id:data.id})),
             catchError((err) => of(fromManageActions.deleteFail({err:err.message})))
         )),
-        tap(() => this.router.navigateByUrl('/manager')),
+        // tap(() => this.router.navigateByUrl('/manager')),
     ),
     {dispatch:false}
     );

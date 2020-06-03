@@ -12,7 +12,7 @@ import * as fromAction from "../../../state/actions/manage.actions";
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class ManagementShellComponent implements OnInit {
-  profile$: Observable<Profile[]> = this.store.pipe(select(fromSelector.selectLoadListProfile));;
+  profile$: Observable<Profile[]> = this.store.pipe(select(fromSelector.selectLoadListProfile));
 
   constructor(
     private store : Store<fromManage.ManageState>
