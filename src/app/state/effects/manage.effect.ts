@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap, concatMap } from 'rxjs/operators';
 import { ManageService } from 'src/app/shared/services/manage.service';
 import * as fromManageActions from "../actions/manage.actions";
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
@@ -23,8 +23,9 @@ export class ManageEffects{
     )));
     createProfile = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.create),
-        mergeMap(action => this._manageService.createUser(action.profile).pipe(
-            map((data)=> fromManageActions.createSuccess({profile:data})),
+        concatMap(action => this._manageService.createUser(action.profile).pipe(
+            tap(()=> console.log("Effect",action.profile)),
+            map(()=> fromManageActions.createSuccess()),
             catchError((err) => of(fromManageActions.createFail({err:err.message})))
         )),
         tap(() => this.router.navigateByUrl('/manager'))
@@ -54,11 +55,18 @@ export class ManageEffects{
     getProfileById = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.getProfileId),
         mergeMap(action => this._manageService.getProfile(action.id).pipe(
-            map((data) => fromManageActions.initCurrentProfile({profile:data})),
+            tap((data) => console.log("EffectProfile",data)),
+            map((data) => fromManageActions.currentProfile({profile : data})),
             catchError((err) => of(fromManageActions.getProfileFail({err:err.message})))
         )),
         tap(() => this.router.navigateByUrl('/manager/actions')),
     ),
     {dispatch:false}
-    )
+    );
+    clearCurrentProfile = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.clearCurrentProfile),
+        tap(() => this.router.navigateByUrl('/manager/actions'))
+    ),
+    {dispatch:false}
+    );
 }

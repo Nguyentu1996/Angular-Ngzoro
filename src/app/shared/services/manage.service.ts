@@ -21,9 +21,10 @@ export class ManageService {
   }
   public createUser(data : Profile){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    console.log("Data",data);
+    
     const newProfile ={
       ...data,
-      id:null
     };
     return this._http.post<Profile>(this.url,newProfile,{headers}).pipe(
       tap(data => console.log("create Profile",JSON.stringify(data))),
@@ -50,7 +51,6 @@ export class ManageService {
   }
   public getProfile (id:any){
     console.log("Id service",id);
-
     const url = `${environment.apiUrl}/${this.usersUrl}${id}`;
     return this._http.get<Profile>(url).pipe(
       tap(data=>console.log("Data-Service",data)),

@@ -12,7 +12,7 @@ export const selectLoadListProfile = createSelector(
     selectFeature,
     state => state.profiles,
 );
-export const selectInitCurrentProfile = createSelector(
+export const selectCurrentProfile = createSelector(
     selectFeature,
     state => state.currentProfile
 );

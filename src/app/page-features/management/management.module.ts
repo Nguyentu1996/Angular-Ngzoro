@@ -18,8 +18,11 @@ import { ShareProfileModule } from 'src/app/shared/modules/shareProfileInfo.modu
 import { ProfileInfoComponent } from '../home/components/profile-info/profile-info.component';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { ActionsProfileComponent } from './components/actions-profile/actions-profile.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 
 const antDesignIcons = AllIcons as {
@@ -39,11 +42,15 @@ const routes : Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
+    FormsModule,
     NzFormModule,
+    NzUploadModule,
     NzTableModule,
     NzDividerModule,
     NzButtonModule,
     NzIconModule,
+    NzSelectModule,
+    NzGridModule,
     NzPopconfirmModule,
     StoreModule.forFeature(fromManage.manageFeatureKey,fromManage.reducer),
     EffectsModule.forFeature([ManageEffects]),

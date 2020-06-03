@@ -13,6 +13,7 @@ export class ListProfileComponent implements OnInit {
   @Input() profile : Profile[];
   @Output() confirmDelete = new EventEmitter();
   @Output() initCurrentProfile = new EventEmitter();
+  @Output() clearCurrenProfile = new EventEmitter();
   constructor(
     private nzMess : NzMessageService
   ) { }
@@ -30,5 +31,8 @@ export class ListProfileComponent implements OnInit {
   setCurrentProfile(id:any){
     console.log("ID current",id)
     this.initCurrentProfile.emit(id);
+  }
+  createProfile(){
+    this.clearCurrenProfile.emit();
   }
 }

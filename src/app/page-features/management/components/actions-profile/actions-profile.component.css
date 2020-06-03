@@ -1,0 +1,24 @@
+
+input{
+    width: 400px !important;
+    height: 35px;
+}
+
+label{
+    height:35px;
+}
+
+:host ::ng-deep .avatar-uploader > .ant-upload {
+    width: 128px;
+    height: 128px;
+  }
+  .container{
+      display: inline   ;
+  }
+  .upload{
+      float: right;
+  }
+  select{
+      height: 35px;
+      width: 400px;
+  }

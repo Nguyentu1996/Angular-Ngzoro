@@ -2,12 +2,13 @@ import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { Subject } from 'rxjs';
-// key that is used to access the data in local storageconst
 
 @Injectable({
   providedIn: 'root'
 })
 export class Translate  {
+   // key that is used to access the data in local storageconst
+
   private STORAGE_KEY = 'local_translate';
   langs = ['en', 'vi'];
   public currentlanguage$ = new Subject();

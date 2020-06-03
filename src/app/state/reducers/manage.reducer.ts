@@ -18,27 +18,30 @@ const manageReducer = createReducer(
     on(ManageActions.loadSuccess, (state,action)=> ({
         ...state,
         profiles:action.profiles,
+      
     })),
     on(ManageActions.loadFail,(state,action) => ({
         ...state,
-        profiles:[],
-        error:action.err
+        error:action.err,
     })),
     on(ManageActions.createSuccess,(state,action)=>({    
         ...state,
-        profiles : [...state.profiles,action.profile]
     })),
     on(ManageActions.updateSuccess,(state,action)=>({
         ...state,
-        profiles : [...state.profiles.map(item => action.profile.id === item.id ? action.profile : item)]
+        // profiles : [...state.profiles.map(item => action.profile.id === item.id ? action.profile : item)]
     })),
     on(ManageActions.deleteSuccess,(state,action)=>({
         ...state,
         profiles : [...state.profiles.filter(val => val.id != action.id)]
     })),
-    on(ManageActions.initCurrentProfile,(state,action)=>({
+    on(ManageActions.currentProfile,(state,action)=>({
         ...state,
         currentProfile: action.profile
+    })),
+    on(ManageActions.clearCurrentProfile,(state,action)=>({
+        ...state,
+        currentProfile:null
     }))
 );
 export function reducer(state:ManageState|undefined,action:Action){

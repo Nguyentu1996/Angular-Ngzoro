@@ -1,5 +1,7 @@
-<button style="float: right;" nz-button nzType="primary"><i nz-icon nzType="plus-square" nzTheme="outline"></i>
-  Create</button>
+<button (click)="createProfile()" nz-button nzType="primary">
+  <!-- <i nz-icon nzType="plus-square" nzTheme="outline"></i> -->
+  Create
+</button>
 <nz-table #basicTable [nzData]="profile">
     <thead>
       <tr>

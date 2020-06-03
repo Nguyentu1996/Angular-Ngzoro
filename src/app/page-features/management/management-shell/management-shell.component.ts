@@ -27,6 +27,10 @@ export class ManagementShellComponent implements OnInit {
     this.store.dispatch(fromAction.delele({id:e}));
   }
   setCurrentProfile(e: any){
+    console.log("Shell",e);
     this.store.dispatch(fromAction.getProfileId({id:e}));
+  }
+  createProfile(e:any){
+    this.store.dispatch(fromAction.clearCurrentProfile());
   }
 }

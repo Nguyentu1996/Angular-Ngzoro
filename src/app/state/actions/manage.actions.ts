@@ -27,14 +27,14 @@ export const deleteFail = createAction(
     props<{err : string}>()
 );
 export const getProfileId = createAction(
-    '[Manage Page] Init current profile Id',
-      props<{id: number}>()
+    '[Manage Page] Get profile by id',
+      props<{id : number}>()
 );
 export const getProfileFail = createAction(
   '[Manage Page] Init current profile fail',
     props<{err: string}>()
 );
-export const initCurrentProfile = createAction(
+export const currentProfile = createAction(
   '[Manage Page] Init current profile',
     props<{profile: Profile}>()
 );
@@ -48,7 +48,6 @@ export const create = createAction(
 );
 export const createSuccess = createAction(
   '[Manage Page] Create success',
-  props<{profile : Profile}>() 
 
 );
 export const createFail = createAction(
