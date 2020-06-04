@@ -6,7 +6,7 @@ export const manageFeatureKey = 'manage';
 export interface ManageState {
     profiles: Profile[];
     error: string;
-    currentProfile : Profile;
+    currentProfile : Profile | null;
 };
 export const initState : ManageState  = {
     profiles : null,
@@ -24,6 +24,10 @@ const manageReducer = createReducer(
         ...state,
         error:action.err,
     })),
+    on(ManageActions.currentProfile,(state,action)=>({
+        ...state,
+        currentProfile: action.profile
+    })),
     on(ManageActions.createSuccess,(state,action)=>({    
         ...state,
     })),
@@ -35,10 +39,7 @@ const manageReducer = createReducer(
         ...state,
         profiles : [...state.profiles.filter(val => val.id != action.id)]
     })),
-    on(ManageActions.currentProfile,(state,action)=>({
-        ...state,
-        currentProfile: action.profile
-    })),
+   
     on(ManageActions.clearCurrentProfile,(state,action)=>({
         ...state,
         currentProfile:null

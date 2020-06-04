@@ -13,7 +13,7 @@ import * as fromAction from "../../../state/actions/manage.actions";
 })
 export class ManagementShellComponent implements OnInit {
   profile$: Observable<Profile[]> = this.store.pipe(select(fromSelector.selectLoadListProfile));
-
+  data$ : Observable<Profile>;
   constructor(
     private store : Store<fromManage.ManageState>
   ) { 
@@ -29,6 +29,8 @@ export class ManagementShellComponent implements OnInit {
   setCurrentProfile(e: any){
     console.log("Shell",e);
     this.store.dispatch(fromAction.getProfileId({id:e}));
+    this.data$= this.store.pipe(select(fromSelector.selectCurrentProfile));
+    this.data$.subscribe(data => console.log("DiffState",data))
   }
   createProfile(e:any){
     this.store.dispatch(fromAction.clearCurrentProfile());
