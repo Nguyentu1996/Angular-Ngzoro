@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Profile } from '../../home/model/profilePayload';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -15,7 +15,8 @@ export class ManagementShellComponent implements OnInit {
   profile$: Observable<Profile[]> = this.store.pipe(select(fromSelector.selectLoadListProfile));
   data$ : Observable<Profile>;
   constructor(
-    private store : Store<fromManage.ManageState>
+    private store : Store<fromManage.ManageState>,
+    private cd : ChangeDetectorRef
   ) { 
   }
 
@@ -25,14 +26,15 @@ export class ManagementShellComponent implements OnInit {
   deleteProfile(e:number){
     console.log("Dispatch Delete",e);
     this.store.dispatch(fromAction.delele({id:e}));
+    // this.profile$ = this.store.pipe(select(fromSelector.selectProfilesAfterDelete));
   }
   setCurrentProfile(e: any){
     console.log("Shell",e);
     this.store.dispatch(fromAction.getProfileId({id:e}));
-    this.data$= this.store.pipe(select(fromSelector.selectCurrentProfile));
-    this.data$.subscribe(data => console.log("DiffState",data))
+
   }
-  createProfile(e:any){
+  createProfile(e:any){ 
+    debugger;
     this.store.dispatch(fromAction.clearCurrentProfile());
   }
 }

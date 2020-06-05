@@ -8,7 +8,7 @@ const routes: Routes = [
     path:'',
     component:LayoutComponent,
     children:[
-      { path:'',redirectTo:'home',pathMatch:'full'},
+      { path:'',redirectTo:'manager',pathMatch:'full'},
       { path:'home',loadChildren:()=> import('./page-features/home/home.module').then(m=>m.HomeModule)},
       { path:'manager',loadChildren:()=> import('./page-features/management/management.module').then(m=>m.ManagementModule)}
     ]

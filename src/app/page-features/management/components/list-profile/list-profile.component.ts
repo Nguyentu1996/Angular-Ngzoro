@@ -33,6 +33,7 @@ export class ListProfileComponent implements OnInit {
     this.initCurrentProfile.emit(id);
   }
   createProfile(){
+    debugger;
     this.clearCurrenProfile.emit();
   }
 }

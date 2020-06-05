@@ -9,6 +9,7 @@ import * as fromManage from "../../../../state/reducers/manage.reducer";
 import * as fromSelector from "../../../../state/selectors/manage.selector";
 import * as fromActions from "../../../../state/actions/manage.actions";
 import { GenericValidator } from 'src/app/shared/validator/generic-validator';
+import { Profile } from 'src/app/page-features/home/model/profilePayload';
 @Component({
   selector: 'app-actions-profile',
   templateUrl: './actions-profile.component.html',
@@ -18,8 +19,10 @@ import { GenericValidator } from 'src/app/shared/validator/generic-validator';
 export class ActionsProfileComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
+  showStatus = false;
   avatarUrl?: string;
   displayMessage: { [key: string]: string } = {};
+  profile : Profile = null;
   private genericValidator: GenericValidator;
   private validationMessages: { [key: string]: { [key: string]: string } };
   options = [
@@ -81,7 +84,7 @@ export class ActionsProfileComponent implements OnInit {
       address: ['',[Validators.required,Validators.minLength(8),Validators.maxLength(50)]],
       email: ['',[Validators.required,Validators.email]],
       readmine: ['',[Validators.required,Validators.maxLength(15),Validators.minLength(3)]],
-      status :['',Validators.required],
+      status :[''],
     });
 
   }
@@ -134,15 +137,16 @@ export class ActionsProfileComponent implements OnInit {
       console.log("data",data);
       if (data) {
         // this.cd.markForCheck();
-        // this.profile = data;
-        this.validateForm.patchValue({
+        this.showStatus = true;
+        this.profile = data;
+        this.validateForm.setValue({
           name : data.name,
           surName : data.surName,
           phoneNumber : data.phoneNumber,
           address : data.address,
           email : data.email,
           readmine : data.readmine,
-          status : data.status
+          status : data.status 
         })
       }
     });
@@ -156,7 +160,14 @@ export class ActionsProfileComponent implements OnInit {
     console.log("value",value);
     if(this.avatarUrl){
       value.image = this.avatarUrl;
+
     }
-    this.store.dispatch(fromActions.create({profile:value}));
+    if(this.showStatus){
+      value.id = this.profile.id
+      this.store.dispatch(fromActions.update({profile:value}));
+    }else{
+      this.store.dispatch(fromActions.create({profile:value}));
+    }
+    
   } 
 }

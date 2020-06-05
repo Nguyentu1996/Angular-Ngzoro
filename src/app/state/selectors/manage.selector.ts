@@ -16,3 +16,18 @@ export const selectCurrentProfile = createSelector(
     selectFeature,
     state => state.currentProfile
 );
+// export const selectCurrentProfileIdDelete = createSelector(
+//     selectFeature,
+//     state => state.idDelete
+// );
+// export const selectProfilesAfterDelete = createSelector(
+//     selectFeature,
+//     selectCurrentProfileIdDelete,
+//     (state,idDelete) =>{
+//         if(idDelete){
+//              state.profiles.filter(p => p.id !== idDelete);
+//         }else{
+//             return state.profiles
+//         }
+//     }
+// )

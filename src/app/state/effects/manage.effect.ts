@@ -31,7 +31,7 @@ export class ManageEffects{
         )),
         tap(() => this.router.navigateByUrl('/manager'))
     ),
-    {dispatch:false}
+    
     );
 
     updateProfile$ = createEffect(()=> this._actions$.pipe(
@@ -41,8 +41,8 @@ export class ManageEffects{
             catchError((err) => of(fromManageActions.updateFail({err:err.message})))
         )),
         tap(() => this.router.navigateByUrl('/manager'))
-    ),
-    {dispatch:false});    
+    )
+    );    
 
     deleteProfile$ = createEffect(() => this._actions$.pipe(
         ofType(fromManageActions.delele),
@@ -52,24 +52,14 @@ export class ManageEffects{
         )),
         // tap(() => this.router.navigateByUrl('/manager')),
     ),
-    {dispatch:false}
+ 
     );
     getProfileById$ = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.getProfileId),
-        mergeMap(action => this._manageService.getProfile(action.id).pipe(
-            tap((data) => console.log("ServiceResponse",data)),
-            map((data) => fromManageActions.currentProfile({profile : data})),
-            tap((data) => console.log("EffectProfile",data.profile)),
-            catchError((err) => of(fromManageActions.getProfileFail({err:err.message})))
-        )),
+        concatMap(action => this._manageService.getProfile(action.id)),
+        map(data => fromManageActions.currentProfile({profile:data})),
         tap(() => this.router.navigateByUrl('/manager/actions')),
-    ),
-    {dispatch:false}
+    )
     );
-    clearCurrentProfile$ = createEffect(()=> this._actions$.pipe(
-        ofType(fromManageActions.clearCurrentProfile),
-        tap(() => this.router.navigateByUrl('/manager/actions'))
-    ),
-    {dispatch:false}
-    );
+   
 }

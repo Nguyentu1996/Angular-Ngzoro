@@ -33,11 +33,11 @@ const manageReducer = createReducer(
     })),
     on(ManageActions.updateSuccess,(state,action)=>({
         ...state,
-        // profiles : [...state.profiles.map(item => action.profile.id === item.id ? action.profile : item)]
+        profiles : [...state.profiles.map(item => action.profile.id === item.id ? action.profile : item)]
     })),
-    on(ManageActions.deleteSuccess,(state,action)=>({
+    on(ManageActions.deleteSuccess,(state,action) =>({
         ...state,
-        profiles : [...state.profiles.filter(val => val.id != action.id)]
+        profiles:[...state.profiles.filter(val => val.id !== action.id)]
     })),
    
     on(ManageActions.clearCurrentProfile,(state,action)=>({

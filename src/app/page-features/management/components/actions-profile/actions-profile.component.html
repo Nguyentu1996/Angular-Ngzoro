@@ -56,7 +56,6 @@
                         <nz-form-control [nzSpan]="12">
                             <input nz-input formControlName="readmine" placeholder="read mine" type="email" />
                             <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.readmine">{{displayMessage.readmine}}</div>
-
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
@@ -67,12 +66,12 @@
 
                         </nz-form-control>
                     </nz-form-item>
-                    <nz-form-item>
+                    <nz-form-item *ngIf="showStatus">
                         <nz-form-label [nzSpan]="7" >Status</nz-form-label>
                         <nz-form-control [nzSpan]="12">
                             <!-- <input nz-input formControlName="address" placeholder="address" type="email" /> -->
                             <select formControlName="status">
-                                <option *ngFor ="let option of options" [value]="option.value">{{option.name}}</option>
+                                <option *ngFor ="let option of options"  [value]="option.id">{{option.name}}</option>
                             </select>
                         </nz-form-control>
                     </nz-form-item>

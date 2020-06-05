@@ -36,11 +36,10 @@ export const getProfileFail = createAction(
 );
 export const currentProfile = createAction(
   '[Manage Page] Init current profile',
-    props<{profile: Profile}>()
+    props<{profile: any}>()
 );
 export const clearCurrentProfile = createAction(
     '[Manage Page] Clear current profile',
-    // props<{profile : null}>()
 )
 export const create = createAction(
     '[Manage Page] Create profile',
