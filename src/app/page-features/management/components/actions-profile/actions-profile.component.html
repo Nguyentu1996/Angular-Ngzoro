@@ -1,88 +1,129 @@
-<p>actions-profile works!</p>
-        <form   class="grid-form" [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">  
-            <div nz-row>
-                <div nz-col nzSpan="3">
-                    <div class="upload">
-                        <nz-upload
-                    class="avatar-uploader"
-                    nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    nzName="avatar"
-                    nzListType="picture-card"
-                    [nzShowUploadList]="false"
-                    [nzBeforeUpload]="beforeUpload"
-                    (nzChange)="handleChange($event)"
-                  >
+<form class="grid-form" [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <div nz-row>
+        <div nz-col [nzSpan]="4">
+            <div class="upload">
+                <nz-upload class="avatar-uploader" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    nzName="avatar" nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+                    (nzChange)="handleChange($event)">
                     <ng-container *ngIf="!avatarUrl">
-                      <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
-                      <div class="ant-upload-text">Upload</div>
+                        <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+                        <div class="ant-upload-text">Upload</div>
                     </ng-container>
-                    <img *ngIf="avatarUrl"  [src]="avatarUrl" style="width: 100%" />
-                  </nz-upload>
-                    </div>
-                </div> 
-                <div nz-col nzSpan="9">
-                    <nz-form-item>
-                        <nz-form-label [nzSpan]="7">Name</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
-                            <input nz-input formControlName="name" placeholder="Name" />
-                            <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.name">{{displayMessage.name}}</div>
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label [nzSpan]="7">SurName</nz-form-label>
-                        <nz-form-control [nzSpan]="12" >
-                            <input nz-input formControlName="surName" placeholder="SurName" />
-                            <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.surName">{{displayMessage.surName}}</div>
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label [nzSpan]="7" >Mobile</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
-                            <input nz-input formControlName="phoneNumber" placeholder="mobile" />
-                            <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.phoneNumber">{{displayMessage.phoneNumber}}</div>
-
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label [nzSpan]="7" >E-mail</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
-                            <input nz-input formControlName="email" placeholder="email" type="email" />
-                            <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.email">{{displayMessage.email}}</div>
-
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label [nzSpan]="7" >Read-mine</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
-                            <input nz-input formControlName="readmine" placeholder="read mine" type="email" />
-                            <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.readmine">{{displayMessage.readmine}}</div>
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-label [nzSpan]="7" >Address</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
-                            <input nz-input formControlName="address" placeholder="address" />
-                            <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.address">{{displayMessage.address}}</div>
-
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item *ngIf="showStatus">
-                        <nz-form-label [nzSpan]="7" >Status</nz-form-label>
-                        <nz-form-control [nzSpan]="12">
-                            <!-- <input nz-input formControlName="address" placeholder="address" type="email" /> -->
-                            <select formControlName="status">
-                                <option *ngFor ="let option of options"  [value]="option.id">{{option.name}}</option>
-                            </select>
-                        </nz-form-control>
-                    </nz-form-item>
-                    <nz-form-item>
-                        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-                            <button  [disabled]='!validateForm.valid || !validateForm.dirty' nz-button nzType="primary">Submit</button>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
+                    <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+                </nz-upload>    
             </div>
-        </form>
+            <!-- <nz-form-label class="form-label" [nzSpan]="7">Image</nz-form-label> -->
 
+        </div>
+        <div nz-col [nzSpan]="9">
+            <nz-form-item class="item-name">
+                <nz-form-label class="form-label" [nzSpan]="4">Name</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <input nz-input formControlName="name" placeholder="Name" />
+                    <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.name">
+                        {{displayMessage.name}}</div>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="item-name">
+                <nz-form-label class="form-label" [nzSpan]="4">SurName</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <input nz-input formControlName="surName" placeholder="SurName" />
+                    <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.surName">
+                        {{displayMessage.surName}}</div>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="9">
+        </div>
+    </div>
+    <div nz-row>
+        <div nz-col nzSpan="10" style="float: left;">
+            <nz-form-item class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">Mobile</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <input nz-input formControlName="phoneNumber" placeholder="mobile" />
+                    <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.phoneNumber">
+                        {{displayMessage.phoneNumber}}</div>
 
-    
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">E-mail</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <input nz-input formControlName="email" placeholder="email" type="email" />
+                    <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.email">
+                        {{displayMessage.email}}</div>
+
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">Read-mine</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <input nz-input formControlName="readmine" placeholder="read mine" type="email" />
+                    <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.readmine">
+                        {{displayMessage.readmine}}</div>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">Address</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <input nz-input formControlName="address" placeholder="address" />
+                    <div class="ant-form-item-explain ng-tns-c1-3 ng-star-inserted" *ngIf="displayMessage.address">
+                        {{displayMessage.address}}</div>
+
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-col nzSpan="14">
+            <nz-form-item class="form-item" *ngIf="showStatus">
+                <nz-form-label class="form-label" [nzSpan]="7">Status</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <!-- <input nz-input formControlName="address" placeholder="address" type="email" /> -->
+                    <nz-select class="select-skill" nzPlaceHolder="Select status" formControlName="status">
+                        <nz-option *ngFor="let option of options" [nzValue]="option.value" [nzLabel]="option.name"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">Department</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <!-- <input nz-input formControlName="address" placeholder="address" type="email" /> -->
+                    <nz-select class="select-skill" nzPlaceHolder="Select department" formControlName="department" [compareWith]="compareFn">
+                        <nz-option *ngFor="let option of departments$ | async" [nzValue]="option" [nzLabel]="option.name"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item  *ngIf ="!checkCreateSkill"class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">Skills</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-select  class="select-skill" nzMode="multiple"  name="skills" nzPlaceHolder="Select skill"  [compareWith]="compareFn" formControlName="skills">
+                        <nz-option *ngFor="let skill of skills$ | async" [nzValue]="skill" [nzLabel]="skill.name">
+                        </nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item  *ngIf ="checkCreateSkill"class="form-item">
+                <nz-form-label class="form-label" [nzSpan]="7">Skills</nz-form-label>
+                <nz-form-control [nzSpan]="12">
+                    <nz-select  class="select-skill" nzMode="multiple"  name="skills" nzPlaceHolder="Select skill"  formControlName="skills">
+                        <nz-option *ngFor="let skill of skills$ | async" [nzValue]="skill" [nzLabel]="skill.name">
+                        </nz-option>
+                       <!-- <ng-container  *ngFor="let skill of skills$ | async" >
+                        <nz-option [nzValue]="skill" [nzLabel]="skill.name" *ngIf="isNotSelected(skill)">
+                        </nz-option>
+                       </ng-container> -->
+                       
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div nz-row>
+        <nz-form-item nz-col nzSpan="4" >
+            <nz-form-control [nzOffset]="13" [nzSpan]="15">
+                <button [disabled]='!validateForm.valid || !validateForm.dirty' nz-button
+                    nzType="primary">Submit</button>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</form>

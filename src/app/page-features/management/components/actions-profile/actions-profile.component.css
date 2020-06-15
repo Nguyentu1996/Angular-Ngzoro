@@ -9,7 +9,7 @@ label{
 }
 
 :host ::ng-deep .avatar-uploader > .ant-upload {
-    width: 128px;
+    width: 119px;
     height: 128px;
   }
   .container{
@@ -20,5 +20,18 @@ label{
   }
   select{
       height: 35px;
+      width: 400px;
+  }
+  .form-item{
+      float: left;
+  }
+  .form-label{
+      width: 100px;
+  }
+  .item-name{
+    margin-top: 12px;
+
+  }
+  .select-skill{
       width: 400px;
   }

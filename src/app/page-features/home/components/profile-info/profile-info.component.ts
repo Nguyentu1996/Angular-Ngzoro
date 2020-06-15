@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import * as fromHome from "../../state/home.selector";
 import * as homeActions from "../../state/home.actions";
+import { SubjectService } from '../../service/data-subject';
 @Component({
   selector: 'app-profile-info',
   templateUrl: './profile-info.component.html',
@@ -17,12 +18,18 @@ export class ProfileInfoComponent implements OnInit ,OnChanges{
   constructor(
     private cd: ChangeDetectorRef,
     private router: ActivatedRoute,
-    private store: Store<fromHome.State>
+    private store: Store<fromHome.State>,
+    private subjectService : SubjectService
 
 
   ) {
+    let obj ={
+      page:"Manager",
+      pageChild:"Info"
+    }
+    this.subjectService.breadcrumb$.next(obj);
     this.id = this.router.snapshot.params.id;
-
+    
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     if(changes.profile){

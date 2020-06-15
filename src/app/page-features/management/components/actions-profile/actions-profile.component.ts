@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef ,HostListener} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
@@ -10,6 +10,10 @@ import * as fromSelector from "../../../../state/selectors/manage.selector";
 import * as fromActions from "../../../../state/actions/manage.actions";
 import { GenericValidator } from 'src/app/shared/validator/generic-validator';
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
+import { Update } from '@ngrx/entity';
+import { Department } from '../../models/department';
+import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
+import { Skill } from 'src/app/page-features/home/model/skillPayload';
 @Component({
   selector: 'app-actions-profile',
   templateUrl: './actions-profile.component.html',
@@ -18,20 +22,31 @@ import { Profile } from 'src/app/page-features/home/model/profilePayload';
 })
 export class ActionsProfileComponent implements OnInit {
   validateForm: FormGroup;
+
+  checkCreateSkill:boolean = true;
   loading = false;
+  isEnglish = false;
   showStatus = false;
+
   avatarUrl?: string;
   displayMessage: { [key: string]: string } = {};
   profile : Profile = null;
+  departments : Department[];
+  department: any;
+  skills : any[] = [];
+
+  departments$ : Observable<Department[]>;
+  skills$ : Observable<Skill[]>;
+
   private genericValidator: GenericValidator;
   private validationMessages: { [key: string]: { [key: string]: string } };
   options = [
     {
-      value : 0,
+      value : false,
       name : 'Active'
     },
     {
-      value : 1,
+      value : true,
       name : 'Delete'
     }
   ];
@@ -40,8 +55,14 @@ export class ActionsProfileComponent implements OnInit {
     private cd : ChangeDetectorRef,
     private store: Store<fromManage.ManageState>,
     private fb: FormBuilder,
-    private msg: NzMessageService
+    private msg: NzMessageService,
+    private i18n: NzI18nService
+
   ) {
+   
+    this. departments$ = this.store.pipe(select(fromSelector.selectDepartment));
+    this.skills$ = this.store.pipe(select(fromSelector.selectSkills));
+
     this.validationMessages = {
       name: {
         required: 'Name is required.',
@@ -74,6 +95,9 @@ export class ActionsProfileComponent implements OnInit {
       status:{
         required: 'Status is required.',
 
+      },
+      department:{
+        required: ' department is required.'
       }
     };
     this.genericValidator = new GenericValidator(this.validationMessages);
@@ -81,10 +105,13 @@ export class ActionsProfileComponent implements OnInit {
       name: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(2)]],
       surName: ['',[Validators.required,Validators.maxLength(20),Validators.minLength(2)]],
       phoneNumber: ['',[Validators.required,Validators.pattern('')]],
-      address: ['',[Validators.required,Validators.minLength(8),Validators.maxLength(50)]],
+      address: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(50)]],
       email: ['',[Validators.required,Validators.email]],
       readmine: ['',[Validators.required,Validators.maxLength(15),Validators.minLength(3)]],
       status :[''],
+      department:['',[Validators.required]],
+      skills:[],
+      dob:['']
     });
 
   }
@@ -133,21 +160,27 @@ export class ActionsProfileComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    
     this.store.pipe(select(fromSelector.selectCurrentProfile)).subscribe(data => {
-      console.log("data",data);
+      // this.cd.
       if (data) {
         // this.cd.markForCheck();
+        this.checkCreateSkill = false;
         this.showStatus = true;
         this.profile = data;
-        this.validateForm.setValue({
+        this.department = data.department
+        this.validateForm.patchValue({
           name : data.name,
           surName : data.surName,
           phoneNumber : data.phoneNumber,
           address : data.address,
           email : data.email,
           readmine : data.readmine,
-          status : data.status 
-        })
+          status : data.status ,
+          department : data.department,
+          skills:data.skills
+        });
+
       }
     });
     this.validateForm.valueChanges.subscribe(
@@ -157,17 +190,32 @@ export class ActionsProfileComponent implements OnInit {
     );
   }
   submitForm(value: any) {
-    console.log("value",value);
+    console.log("Submit",value);    
     if(this.avatarUrl){
       value.image = this.avatarUrl;
-
-    }
+    };
+     
     if(this.showStatus){
-      value.id = this.profile.id
-      this.store.dispatch(fromActions.update({profile:value}));
+      value.id = this.profile.id;
+      const update: Update<Profile> = {
+        id: value.id,
+        changes: {
+          ...value,
+        }
+      }
+      this.store.dispatch(fromActions.update({update}));
+
     }else{
       this.store.dispatch(fromActions.create({profile:value}));
     }
     
   } 
+  compareFn(a, b) {
+    return a && b && a.id == b.id;
+  }
+  onChange(result: Date): void {
+    console.log('onChange: ', result);
+  }
+
+  
 }

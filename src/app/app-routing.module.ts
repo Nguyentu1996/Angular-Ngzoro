@@ -9,8 +9,8 @@ const routes: Routes = [
     component:LayoutComponent,
     children:[
       { path:'',redirectTo:'manager',pathMatch:'full'},
-      { path:'home',loadChildren:()=> import('./page-features/home/home.module').then(m=>m.HomeModule)},
-      { path:'manager',loadChildren:()=> import('./page-features/management/management.module').then(m=>m.ManagementModule)}
+      { path:'home',loadChildren:()=> import('./module/HomeLazyLoad.module').then(m=>m.HomeLazyLoadModule),data: {animation: 'HomePage'}},
+      { path:'manager',loadChildren:()=> import('./module/ManageLazyLoad.module').then(m=>m.ManageLazyLoadModule),data: {animation: 'ManagePage'}}
     ]
   },
   {

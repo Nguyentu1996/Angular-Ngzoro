@@ -1,5 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
+import { Update } from '@ngrx/entity';
+import { Department } from 'src/app/page-features/management/models/department';
+import { Skill } from 'src/app/page-features/home/model/skillPayload';
 
 export const load = createAction(
   '[Manage Page] Load',
@@ -18,14 +21,15 @@ export const delele = createAction(
     '[Manage Page] Delete',
     props<{id : number}>()
 );
-export const deleteSuccess = createAction(
-    '[Manage Page] Delete success',
-    props<{id : number}>()
+export const deleleSuccess = createAction(
+  '[Manage Page] Delete success' ,
+  props<{id : number}>()
 );
-export const deleteFail = createAction(
-    '[Manage Page] Delete fail',
-    props<{err : string}>()
+export const deleleFail = createAction(
+  '[Manage Page] Delete fail' ,
+  props<{err : string}>()
 );
+
 export const getProfileId = createAction(
     '[Manage Page] Get profile by id',
       props<{id : number}>()
@@ -47,6 +51,7 @@ export const create = createAction(
 );
 export const createSuccess = createAction(
   '[Manage Page] Create success',
+  props<{profile : Profile}>() 
 
 );
 export const createFail = createAction(
@@ -55,7 +60,7 @@ export const createFail = createAction(
 );
 export const update = createAction(
   '[Manage Page] Update profile',
-  props<{profile : Profile}>()
+  props<{update:Update<Profile>}>()
 );
 export const updateSuccess = createAction(
   '[Manage Page] Update success',
@@ -64,4 +69,46 @@ export const updateSuccess = createAction(
 export const updateFail = createAction (
   '[Manage Page] Update fail',
   props<{err:string}>()
-)
+);
+export const filter = createAction(
+  '[Manage Page] Filter User',
+  props<{id : number}>()
+);
+export const filterResult = createAction(
+  '[Manage Page] Filter result',
+  props<{profiles : Profile[]}>()
+);
+export const LoadDepartment = createAction(
+  '[Manage Page] Load department'
+);
+export const LoadDepartmentSuccess = createAction(
+  '[Manage Page] Load department success',
+  props<{department:Department[]}>()
+);
+export const LoadSkills = createAction(
+  '[Manage Page] Load list skill',
+);
+export const LoadSkillSuccess = createAction(
+  '[Manage Page] Load list skill success',
+  props<{skills:Skill[]}>()
+);
+export const search = createAction(
+  '[Manage Page] Search by name',
+  props<{keywork:string}>()
+);
+export const searchSuccess = createAction(
+  '[Manage Page] Search result',
+  props<{profiles:Profile[]}>()
+);
+export const changeIndexPage = createAction(
+  '[Manage Page] Page change',
+  props<{page:number,limit:number}>()
+);
+export const currentPageDataChange = createAction(
+  '[Manage Page] Init current page',
+  props<{profiles:Profile[]}>()
+);
+// export const pageSizeChange = createAction(
+//   '[Manage Page] Load profile by pageSizeChange',
+//   props<{page:number,limit:number}>()
+// )

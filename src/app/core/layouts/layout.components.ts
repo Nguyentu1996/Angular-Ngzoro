@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { SubjectService } from 'src/app/page-features/home/service/data-subject';
 
 @Component({
     selector: 'app-main',
@@ -54,8 +55,18 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 export class LayoutComponent implements OnInit {
     isCollapsed = false;
+    page = '';
+    pageChild ='';
+    constructor(
+      private _subjectService : SubjectService
+    ) {
+      this._subjectService.breadcrumb$.subscribe(data => {
+        this.page = data.page;
+        this.pageChild = data.pageChild;
+      })
+     }
 
-    constructor() { }
-
-    ngOnInit() { }
+    ngOnInit() { 
+      
+    }
 }

@@ -24,25 +24,33 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { PanigatorComponent } from './components/panigator/panigator.component';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { PanigatorModule } from './components/panigator/panigator.module';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
 };
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 const routes : Routes = [
-  { path :'',component:ManagementShellComponent},
-  { path: 'details/:id',component:ProfileInfoComponent},
-  { path: 'actions',component:ActionsProfileComponent}
+  { path :'',component:ManagementShellComponent,data: {animation: 'ManagePage'}},
+  { path: 'details/:id',component:ProfileInfoComponent,data: {animation: 'ProfilePage'}},
+  { path: 'actions',component:ActionsProfileComponent,data: {animation: 'ActionsPage'}}
+ 
   // ProfileInfoComponent
 ]
 
 @NgModule({
-  declarations: [ManagementShellComponent, ListProfileComponent, ActionsProfileComponent],
+  declarations: [ManagementShellComponent, ListProfileComponent, ActionsProfileComponent,  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormsModule,
+    PanigatorModule,
     NzFormModule,
     NzUploadModule,
     NzTableModule,
@@ -52,10 +60,13 @@ const routes : Routes = [
     NzSelectModule,
     NzGridModule,
     NzPopconfirmModule,
+    NzSpinModule,
+    NzAlertModule,
+    NzDatePickerModule,
     StoreModule.forFeature(fromManage.manageFeatureKey,fromManage.reducer),
     EffectsModule.forFeature([ManageEffects]),
     ShareProfileModule
   ],
-  providers:[{ provide: NZ_ICONS, useValue: icons },ProfileInfoComponent]
+  providers:[{ provide: NZ_ICONS, useValue: icons },ProfileInfoComponent,PanigatorComponent]
 })
 export class ManagementModule { }

@@ -18,7 +18,7 @@ import { ShareProfileModule } from 'src/app/shared/modules/shareProfileInfo.modu
 
 const routes : Routes = [
 //  {path:'',component:HomeShellComponent},
- {path: '',component:HomeShellComponent}
+ {path: '',component:HomeShellComponent,data: {animation: 'HomePage'}}
 
 ]
 

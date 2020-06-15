@@ -1,44 +1,92 @@
-<button (click)="createProfile()" [routerLink]="['./actions']" routerLinkActive="router-link-active"  nz-button nzType="primary">
-  <!-- <i nz-icon nzType="plus-square" nzTheme="outline"></i> -->
-  Create
-</button>
-<nz-table #basicTable [nzData]="profile">
+<div >
+  <div class="filter-data">
+    <button (click)="createProfile()" [routerLink]="['./actions']" routerLinkActive="router-link-active"  nz-button nzType="primary">
+      <!-- <i nz-icon nzType="plus-square" nzTheme="outline"></i> -->
+      Create
+    </button>
+  </div>
+  <div class="filter-data ">
+    <input  nz-input placeholder="Search Name" [formControl]="searchByName" />
+    <input  nz-input placeholder="Search Email" [formControl]="searchByEmail" />
+    <input  nz-input placeholder="Search Address" [formControl]="searchByAddress" />
+
+    <nz-select class="left-screen"  nzPlaceHolder="Department" [formControl]="filter" >
+      <nz-option [nzValue]="" nzLabel="All"></nz-option>
+      <nz-option     
+          *ngFor = "let item of department"
+          [nzValue] ="item.id" [nzLabel]="item.name"></nz-option>
+    </nz-select>
+  </div>
+  <!-- <app-select-filter [department] = "department"></app-select-filter> -->
+  
+</div>
+
+<nz-table #basicTable 
+[nzData]="profile"
+nzPaginationPosition="true" 
+[nzPageSize]="pageLimit"
+
+
+>
+<!-- (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" -->
     <thead>
       <tr>
         <th>Name</th>
-        <th>Age</th>
-        <th>Address</th>
+        <th>SurName</th>
+        <th>Department</th>
+        <th>Email</th>
         <th>Action</th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>{{ data.name }}</td>
-        <td>{{ data.surName }}</td>
-        <td>{{ data.address }}</td>
-        <td>
-          <!-- <a>Action 一 {{ data.name }}</a> -->
-          <a  
-            [routerLink]="['./details',data.id]" routerLinkActive="router-link-active" >
-             <i nz-icon nzType="info" nzTheme="outline"></i>
-          </a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a  
-            [nzIcon]="iconTpl"
-            nz-popconfirm
-            nzPopconfirmTitle="Are you sure delete this task?"
-            nzPopconfirmPlacement="bottom"
-            (nzOnConfirm)="confirm(data.id)"
-            (nzOnCancel)="cancel()">
-          <i nz-icon nzType="delete" nzTheme="outline"></i>
-          </a>
-          <ng-template #iconTpl>
-            <i nz-icon nzType="question-circle-o" style="color: red;"></i>
-          </ng-template>
-          <nz-divider nzType="vertical"></nz-divider>
-          <!-- [routerLink]="['./actions']" routerLinkActive="router-link-active" -->
-         <a (click)="setCurrentProfile(data.id)" ><i nz-icon nzType="edit" nzTheme="outline"></i> </a>    
-            </td>
-      </tr>
+    
+    <tbody *ngIf="!load else loading"> 
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.surName }}</td>
+          <td>{{ data.department?.name }}</td>
+          <td>{{data.email}}</td>
+          <td>
+            <!-- <a>Action 一 {{ data.name }}</a> -->
+            <a  
+              [routerLink]="['./details',data.id]" routerLinkActive="router-link-active" >
+               <i nz-icon nzType="info" nzTheme="outline"></i>
+            </a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a  
+              [nzIcon]="iconTpl"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure delete this task?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="confirm(data.id)"
+              (nzOnCancel)="cancel()">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </a>
+            <ng-template #iconTpl>
+              <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+          
+            <nz-divider nzType="vertical"></nz-divider>
+            <!-- [routerLink]="['./actions']" routerLinkActive="router-link-active" -->
+           <a (click)="setCurrentProfile(data.id)" ><i nz-icon nzType="edit" nzTheme="outline"></i> </a>    
+              </td>
+        </tr>
+    <!--  -->
     </tbody>
   </nz-table>
+  <div style="float: right;">
+    <app-panigator 
+       [totalPage]="profile[0]?.totalPage ? profile[0]?.totalPage : '0'"
+       [totalRow]="profile[0]?.totalRow"
+       [pageLimit]="profile[0]?.pageLimit"
+       (pageIndexChange)="pageIndexChange($event)"
+       (pageSizeChangeOutPut)="pageSizeChange($event)"
+    >
+    </app-panigator>
+
+  </div>
+  <ng-template #loading>
+    <nz-spin nzTip="Loading..." style="height: 100px;position: fixed; 
+    top: 25%;
+    left: 50%;" nzSize="small">
+    </nz-spin>
+  </ng-template>

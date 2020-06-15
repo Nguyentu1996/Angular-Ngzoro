@@ -4,6 +4,8 @@ import { Profile } from 'src/app/page-features/home/model/profilePayload';
 import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { Department } from 'src/app/page-features/management/models/department';
+import { Skill } from 'src/app/page-features/home/model/skillPayload';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +33,11 @@ export class ManageService {
       catchError(this.errorHandle)
     )
   }
-  public updateUser(data : Profile){
+  public updateUser(id:number|string,changes :Partial<Profile>){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${environment.apiUrl}/${this.usersUrl}${data.id}`;
+    const url = `${environment.apiUrl}/${this.usersUrl}${id}`;
 
-    return  this._http.put<Profile>(url,data,{headers}).pipe(
+    return  this._http.put<Profile>(url,changes,{headers}).pipe(
       tap(data => console.log("update profile",data)),
       catchError(this.errorHandle)
     )
@@ -56,6 +58,24 @@ export class ManageService {
       tap(data=>console.log("Data-Service",data)),
       catchError(this.errorHandle)
     );
+  }
+  public getDepartment(){
+    return this._http.get<Department[]>(`${environment.apiUrl}/api/department/`);
+  };
+
+  public filterUserByDepartment(id:number){
+    return this._http.get<Profile[]>(`${environment.apiUrl}/api/users/filter/${id}`);
+  };
+  public getAllSkill(){
+    return this._http.get<Skill[]>(`${environment.apiUrl}/api/skill/`);
+  };
+  public searchName(keywork:any){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this._http.get<Profile[]>(`${environment.apiUrl}/api/users/search?keywork=${keywork}`);
+  };
+  public getProfileByIndexChangePanigator(currentPage:any,limitPage : any){
+    return this._http.get<Profile[]>(`${this.url}?page=${currentPage}&limit=${limitPage}`);
   }
   private errorHandle(err){
     let errorMessage : string;

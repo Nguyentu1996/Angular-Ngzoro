@@ -1,8 +1,13 @@
 <app-list-profile
-    [profile]="profile$ | async"
-    (confirmDelete)="deleteProfile($event)"
-    (initCurrentProfile)="setCurrentProfile($event)"
-    (clearCurrenProfile) ="createProfile($event)"
+    [profile] = "profile$ | async"
+    [department] = "department$ | async" 
+    (confirmDelete) = "deleteProfile($event)"
+    (initCurrentProfile) = "setCurrentProfile($event)"
+    (clearCurrenProfile) = "createProfile($event)"
+    (filterProfile)="filterProfile($event)"
+    (getAll)="getAll($event)"
+    (searchName)="searchName($event)"
+    (pageChange)="pageIndexChange($event)"
 >
 </app-list-profile>
   

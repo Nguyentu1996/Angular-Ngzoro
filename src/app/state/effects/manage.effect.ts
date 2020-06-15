@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
-import { map, mergeMap, catchError, tap, concatMap } from 'rxjs/operators';
+import { EMPTY, of, from } from 'rxjs';
+import { map, mergeMap, catchError, tap, concatMap, delay } from 'rxjs/operators';
 import { ManageService } from 'src/app/shared/services/manage.service';
 import * as fromManageActions from "../actions/manage.actions";
 import { Profile } from 'src/app/page-features/home/model/profilePayload';
@@ -17,6 +17,7 @@ export class ManageEffects{
     loadProfile$ = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.load),
         mergeMap(action=> this._manageService.getAllUser().pipe(
+            delay(250),
             map((data : Profile[]) => fromManageActions.loadSuccess({profiles:data})),
             catchError((err)=> of(fromManageActions.loadFail({err:err.message}))
         ))
@@ -25,35 +26,31 @@ export class ManageEffects{
     createProfile$ = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.create),
         concatMap(action => this._manageService.createUser(action.profile).pipe(
-            tap(()=> console.log("Effect",action.profile)),
-            map(()=> fromManageActions.createSuccess()),
-            catchError((err) => of(fromManageActions.createFail({err:err.message})))
+            map((action)=> fromManageActions.createSuccess({profile:action})),
+            catchError((err)=> of(fromManageActions.createFail({err:err.message})))
         )),
         tap(() => this.router.navigateByUrl('/manager'))
-    ),
-    
+    )
     );
 
     updateProfile$ = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.update),
-        mergeMap(action => this._manageService.updateUser(action.profile).pipe(
-            map((data)=> fromManageActions.updateSuccess({profile:data})),
-            catchError((err) => of(fromManageActions.updateFail({err:err.message})))
+        concatMap(action => this._manageService.updateUser(action.update.id,action.update.changes).pipe(
+            map(action => fromManageActions.updateSuccess({profile:action})),
+            catchError((err)=>of(fromManageActions.updateFail({err:err.message}))),
         )),
-        tap(() => this.router.navigateByUrl('/manager'))
+        tap(()=> this.router.navigateByUrl("/manager"))
     )
     );    
 
     deleteProfile$ = createEffect(() => this._actions$.pipe(
         ofType(fromManageActions.delele),
-        mergeMap(action => this._manageService.deleteUser(action.id).pipe(
-            map((data)=> fromManageActions.deleteSuccess({id:data.id})),
-            catchError((err) => of(fromManageActions.deleteFail({err:err.message})))
+        concatMap(action => this._manageService.deleteUser(action.id).pipe(
+            map(action => fromManageActions.load()),
+            catchError((err)=> of(fromManageActions.deleleFail({err:err.message})))
         )),
-        // tap(() => this.router.navigateByUrl('/manager')),
-    ),
- 
-    );
+        ));
+
     getProfileById$ = createEffect(()=> this._actions$.pipe(
         ofType(fromManageActions.getProfileId),
         concatMap(action => this._manageService.getProfile(action.id)),
@@ -61,5 +58,38 @@ export class ManageEffects{
         tap(() => this.router.navigateByUrl('/manager/actions')),
     )
     );
+    getDepartment$ = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.LoadDepartment),
+        mergeMap(action => this._manageService.getDepartment().pipe(
+            map(data => fromManageActions.LoadDepartmentSuccess({department:data}))
+        ))
+    ));
+    filterUser$ = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.filter),
+        mergeMap(action => this._manageService.filterUserByDepartment(action.id).pipe(
+            delay(250),
+            map(data => fromManageActions.filterResult({profiles:data})),
+        ))
+    ));
+    getListSkill$ = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.LoadSkills),
+        concatMap((action)=> this._manageService.getAllSkill().pipe(
+            map(action => fromManageActions.LoadSkillSuccess({skills:action}))
+        ))
+    ));
+    searchUser$ = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.search),
+        mergeMap(action => this._manageService.searchName(action.keywork).pipe(
+            delay(250),
+            map(data => fromManageActions.searchSuccess({profiles:data}))
+        ))
+    ));
+    pageIndexChange$ = createEffect(() => this._actions$.pipe(
+        ofType(fromManageActions.changeIndexPage),
+        mergeMap(action => this._manageService.getProfileByIndexChangePanigator(action.page,action.limit).pipe(
+            delay(250),
+            map(data => fromManageActions.currentPageDataChange({profiles:data}))
+        ))
+    ) )
    
 }
