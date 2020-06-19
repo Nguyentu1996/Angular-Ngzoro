@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { slideInAnimation } from '../shared/router-animation/router-animation';
 import { RouterOutlet } from '@angular/router';
+import { slideInAnimation } from 'src/app/shared/router-animation/router-animation';
 
 @Component({
-    selector: 'selector-home-lazy-load',
+    selector: 'app-homeComp',
     template: `<div [@routeAnimations]="prepareRoute(outlet)"><router-outlet #outlet="outlet"></router-outlet></div>`,    
     animations: [
         slideInAnimation
@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
       ]
 })
 
-export class HomeLazyLoadComponent implements OnInit {
+export class HomeComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }

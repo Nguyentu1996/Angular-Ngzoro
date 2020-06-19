@@ -3,15 +3,17 @@ import { slideInAnimation } from '../shared/router-animation/router-animation';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-    selector: 'selector-home-lazy-load',
-    template: `<div [@routeAnimations]="prepareRoute(outlet)"><router-outlet #outlet="outlet"></router-outlet></div>`,    
-    animations: [
+    selector: 'app-auth',
+    template: `<div  [@routeAnimations]="prepareRoute(outlet)"><router-outlet #outlet="outlet"></router-outlet></div>`,    animations: [
         slideInAnimation
         // animation triggers go here
-      ]
+      ],
+     
+      
 })
 
-export class HomeLazyLoadComponent implements OnInit {
+
+export class AuthComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }

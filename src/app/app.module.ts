@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -14,6 +14,10 @@ import { AntdModule } from './ng-zoro-antd.module';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { NzIconsModule } from './nz-icon.module';
+import { AuthGuardService } from './shared/services/guard/auth-guard.service';
+import { AuthInterceptorService } from './shared/services/interceptor/auth-interceptor.service';
 
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -21,13 +25,15 @@ export function httpTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-   
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CoreModule,
-    AntdModule,
+    // CoreModule,
+    NzIconsModule,
+
+    // AntdModule,
     HttpClientModule,
     BrowserAnimationsModule,
     StoreModule.forRoot({}),
@@ -45,7 +51,9 @@ export function httpTranslateLoader(http: HttpClient) {
     }),
     StorageServiceModule
   ],
-  providers: [  ],
+  providers: [ AuthGuardService,
+             { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+  ],
 
   bootstrap: [AppComponent]
 })

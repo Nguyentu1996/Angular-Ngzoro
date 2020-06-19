@@ -11,8 +11,8 @@ import { StoreModule } from '@ngrx/store';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
-import { IconDefinition } from '@ant-design/icons-angular';
-import * as AllIcons from '@ant-design/icons-angular/icons';
+// import { IconDefinition } from '@ant-design/icons-angular';
+// import * as AllIcons from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ShareProfileModule } from 'src/app/shared/modules/shareProfileInfo.module';
 import { ProfileInfoComponent } from '../home/components/profile-info/profile-info.component';
@@ -30,21 +30,22 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { PanigatorComponent } from './components/panigator/panigator.component';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { PanigatorModule } from './components/panigator/panigator.module';
+import { ManageComponent } from './management.components';
+import { CoreModule } from 'src/app/core/core.module';
 
-const antDesignIcons = AllIcons as {
-  [key: string]: IconDefinition;
-};
-const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
+
+
 const routes : Routes = [
-  { path :'',component:ManagementShellComponent,data: {animation: 'ManagePage'}},
-  { path: 'details/:id',component:ProfileInfoComponent,data: {animation: 'ProfilePage'}},
-  { path: 'actions',component:ActionsProfileComponent,data: {animation: 'ActionsPage'}}
- 
-  // ProfileInfoComponent
+  {path:'',component:ManageComponent,
+      children:[
+         {path:'',component:ManagementShellComponent, data:{animation :"HomeLazy"}},
+        { path: 'details/:id',component:ProfileInfoComponent,data: {animation: 'ProfilePage'}},
+        { path: 'actions',component:ActionsProfileComponent,data: {animation: 'ActionsPage'}}
+      ]},
 ]
 
 @NgModule({
-  declarations: [ManagementShellComponent, ListProfileComponent, ActionsProfileComponent,  ],
+  declarations: [ManagementShellComponent, ListProfileComponent, ActionsProfileComponent,ManageComponent  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -62,11 +63,13 @@ const routes : Routes = [
     NzPopconfirmModule,
     NzSpinModule,
     NzAlertModule,
+    CoreModule,
     NzDatePickerModule,
     StoreModule.forFeature(fromManage.manageFeatureKey,fromManage.reducer),
     EffectsModule.forFeature([ManageEffects]),
     ShareProfileModule
   ],
-  providers:[{ provide: NZ_ICONS, useValue: icons },ProfileInfoComponent,PanigatorComponent]
+  providers:[,ProfileInfoComponent,PanigatorComponent,]
+  // { provide: NZ_ICONS, useValue: icons }
 })
 export class ManagementModule { }

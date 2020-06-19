@@ -1,24 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LayoutComponent } from './core/layouts/layout.components';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuardService } from './shared/services/guard/auth-guard.service';
 
 
 const routes: Routes = [
-  {
-    path:'',
-    component:LayoutComponent,
-    children:[
-      { path:'',redirectTo:'manager',pathMatch:'full'},
-      { path:'home',loadChildren:()=> import('./module/HomeLazyLoad.module').then(m=>m.HomeLazyLoadModule),data: {animation: 'HomePage'}},
-      { path:'manager',loadChildren:()=> import('./module/ManageLazyLoad.module').then(m=>m.ManageLazyLoadModule),data: {animation: 'ManagePage'}}
-    ]
-  },
-  {
-    path:'',component:LayoutComponent,
-    children:[
-      {path:"**",loadChildren:()=> import('./page-not-found/page-not-found.module').then(m=>m.PageNotFoundModule)}
-    ]
-  }
+  { path:'auth',loadChildren:()=>import("./Auth/auth.module").then(m=>m.AuthModule),data:{animation:"PageAuth"}}, 
+  { path:'home',loadChildren:()=> import('./page-features/home/Homemodule/home.modules').then(m=>m.HomeSModule),data: {animation: 'HomePage'},canActivate:[AuthGuardService]},
+  { path:'manager',loadChildren:()=> import('./page-features/management/module/manage.module').then(m=>m.ManageModule),data: {animation: 'ManagePage'},canActivate:[AuthGuardService]},
+  { path:'',redirectTo:'auth',pathMatch:'full'},
+  { path:"**",component:PageNotFoundComponent,data:{animation:"pageNotFound"}},
 ];
 
 @NgModule({

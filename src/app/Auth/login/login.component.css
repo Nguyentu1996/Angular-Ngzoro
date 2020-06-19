@@ -1,0 +1,33 @@
+
+      .login-form {
+        width: 16vw;
+        /* padding-top: 30vh; */
+
+      }
+      
+
+      .login-form-margin {
+        margin-bottom: 16px;
+      }
+
+      .login-form-forgot {
+        float: right;
+      }
+
+      .login-form-button {
+        width: 100%;
+      }
+      .container{
+        /* background-color: burlywood ; */
+        /* display: block; */
+        text-align: center;
+      }
+      .wrapper{
+        margin-top: 25vh;
+        display: inline-block;
+      }
+/* .form-login{
+  display: block;
+  text-align: center;
+ } */
+
