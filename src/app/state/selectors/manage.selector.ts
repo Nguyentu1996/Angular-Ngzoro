@@ -31,6 +31,10 @@ export const selectCurrentPageData = createSelector(
 export const selectPageSize = createSelector(
     selectFeature,
     state => state.pageSize
+);
+export const selectCurrentSkill = createSelector(
+    selectFeature,
+    state => state.currentSkill
 )
 // export const selectCurrentProfileIdDelete = createSelector(
 //     selectFeature,

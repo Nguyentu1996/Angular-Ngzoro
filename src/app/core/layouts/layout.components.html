@@ -7,14 +7,14 @@
             <li [routerLink]="['/home']" routerLinkActive="router-link-active" nz-menu-item>Home  </li>
             <!-- <li nz-menu-item>Bill</li>
             <li nz-menu-item>Alex</li> -->
-            <li [routerLink]="['/manager']" routerLinkActive="router-link-active" nz-menu-item>Manager  </li>
+            <!-- <li [routerLink]="['/manager']" routerLinkActive="router-link-active" nz-menu-item>Manager  </li> -->
 
           </ul>
         </li>
-        <li nz-submenu nzTitle="Team" nzIcon="team">
+        <li nz-submenu nzTitle="Manager" nzIcon="team">
           <ul>
-            <li nz-menu-item>Team 1</li>
-            <li nz-menu-item>Team 2</li>
+            <li [routerLink]="['/manager/list-employee']" routerLinkActive="router-link-active" nz-menu-item> List Employee  </li>
+            <li [routerLink]="['/manager/department']" routerLinkActive="router-link-active" nz-menu-item>Department & Skill </li>
           </ul>
         </li>
         <li nz-menu-item>

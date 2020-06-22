@@ -32,20 +32,30 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { PanigatorModule } from './components/panigator/panigator.module';
 import { ManageComponent } from './management.components';
 import { CoreModule } from 'src/app/core/core.module';
-
+import { DepartmentComponent } from './components/department/department.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 
 const routes : Routes = [
-  {path:'',component:ManageComponent,
+  { 
+    path:'list-employee',component:ManageComponent,
       children:[
-         {path:'',component:ManagementShellComponent, data:{animation :"HomeLazy"}},
+        { path:'',component:ManagementShellComponent, data:{animation :"HomeLazy"}},
         { path: 'details/:id',component:ProfileInfoComponent,data: {animation: 'ProfilePage'}},
-        { path: 'actions',component:ActionsProfileComponent,data: {animation: 'ActionsPage'}}
-      ]},
+        { path: 'actions',component:ActionsProfileComponent,data: {animation: 'ActionsPage'}},
+      ]
+  },
+  {
+    path:'department',component:ManageComponent,
+    children:[
+      { path:'',component:DepartmentComponent,data:{animation:"DepartmentPage"}}
+    ]
+  }
 ]
 
 @NgModule({
-  declarations: [ManagementShellComponent, ListProfileComponent, ActionsProfileComponent,ManageComponent  ],
+  declarations: [ManagementShellComponent, ListProfileComponent, ActionsProfileComponent,ManageComponent,DepartmentComponent  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -63,7 +73,9 @@ const routes : Routes = [
     NzPopconfirmModule,
     NzSpinModule,
     NzAlertModule,
+    NzCardModule,
     CoreModule,
+    NzBadgeModule,
     NzDatePickerModule,
     StoreModule.forFeature(fromManage.manageFeatureKey,fromManage.reducer),
     EffectsModule.forFeature([ManageEffects]),

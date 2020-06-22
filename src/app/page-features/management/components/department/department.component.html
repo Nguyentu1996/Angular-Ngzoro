@@ -1,0 +1,73 @@
+<p>Skills table</p>
+<div nz-row >
+    <div nz-col nzSpan="12" *ngIf="(skills$ | async) || {}; let skills">
+        <nz-table #basicTable [nzData]="skills"
+        [nzPaginationPosition]="true"
+        >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Skill name</th>
+                <th>Create Time</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td>{{data.id}}</td>
+                <td>{{data.name}}</td>
+                <td>{{data.createTime |  date:'medium'}}</td>
+                <td>
+                    <nz-badge nzStatus="{{data.isDelete ? 'processing' :'success'}}" nzText="{{data.isDelete ? 'deleted' : 'Active'}}"></nz-badge>
+                    <!-- {{data.isDelete ? 'Delete' :'Active'}}</td> -->
+                <td>
+                  <a (click)="create()">Create </a>
+                  <!-- <nz-divider nzType="vertical"></nz-divider>
+                  <a>Delete</a> -->
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <a (click)="update(data.id)">Update</a>
+                </td>
+              </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <div class="form-create" nz-col nzSpan="12" *ngIf="!isUpdate">
+          <nz-card style="width:500px; display: inline-block; " >
+            <label style="padding:10px ;">Create Skill</label>
+            <input style="width: 300px " type="text" nz-input placeholder="New skill" [formControl]="skillName">
+            <button (click)="createSkill()">Submit</button>
+          </nz-card>
+    </div>
+    <div nz-col nzSpan="12" *ngIf="isUpdate" >
+        <form nz-form [formGroup]="formData"
+        (ngSubmit)="onSubmit(formData.value)">
+            <nz-form-item hidden>
+            <nz-form-label [nzSpan]="7">Id</nz-form-label>
+            <nz-form-control nzHasFeedback [nzSpan]="12" nzErrorTip="Input is required">
+                <input  style="width: 300px " nz-input formControlName="id" name="name"  required />
+              </nz-form-control>
+             </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7">Skill name</nz-form-label>
+                <nz-form-control nzHasFeedback [nzSpan]="12" nzErrorTip="Input is required">
+                    <input  style="width: 300px " nz-input formControlName="name" name="name"  required />
+                  </nz-form-control>
+            </nz-form-item>
+             <nz-form-item>
+                <nz-form-label [nzSpan]="7">Status</nz-form-label>
+                <nz-form-control    >
+                    <nz-select style="width: 300px " nzPlaceHolder="Select status" formControlName="isDelete">
+                        <nz-option *ngFor="let option of options" [nzValue]="option.value" [nzLabel]="option.name"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+            </nz-form-item>
+            <nz-form-item  >
+                <nz-form-control  [nzSpan]="12"> 
+                    <button style="float: right;" nz-button
+                    nzType="primary">Update</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

@@ -76,7 +76,19 @@ export class ManageService {
   };
   public getProfileByIndexChangePanigator(currentPage:any,limitPage : any){
     return this._http.get<Profile[]>(`${this.url}?page=${currentPage}&limit=${limitPage}`);
+  };
+  public createSkill(skill :Skill){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this._http.post<any>(`${environment.apiUrl}/api/skill/`,skill,{headers});
+  };
+  public getSkill(id: any){
+    return this._http.get<Skill>(`${environment.apiUrl}/api/skill/${id}`)
+  };
+  public updateSkill(skill : Skill){
+    return this._http.post<Skill>(`${environment.apiUrl}/api/skill/update`,skill);
   }
+
   private errorHandle(err){
     let errorMessage : string;
     if(err.error instanceof ErrorEvent){

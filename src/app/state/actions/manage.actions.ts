@@ -108,7 +108,19 @@ export const currentPageDataChange = createAction(
   '[Manage Page] Init current page',
   props<{profiles:Profile[]}>()
 );
-// export const pageSizeChange = createAction(
-//   '[Manage Page] Load profile by pageSizeChange',
-//   props<{page:number,limit:number}>()
-// )
+export const createSkill = createAction(
+  '[Manage Page] New skill',
+  props<{skill : Skill}>()
+);
+export const getSkillById = createAction(
+  '[Manage Page] get Skill',
+  props<{id : number}>()
+);
+export const currentSkill = createAction(
+  '[Manage Page] Init current skill',
+  props<{skill: Skill}>()
+);
+export const updateSkill = createAction(
+  '[Manage Page] Update User',
+  props<{skill : Skill}>()
+)

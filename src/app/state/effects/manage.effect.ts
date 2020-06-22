@@ -55,7 +55,7 @@ export class ManageEffects{
         ofType(fromManageActions.getProfileId),
         concatMap(action => this._manageService.getProfile(action.id)),
         map(data => fromManageActions.currentProfile({profile:data})),
-        tap(() => this.router.navigateByUrl('/manager/actions')),
+        tap(() => this.router.navigateByUrl('/manager/list-employee/actions')),
     )
     );
     getDepartment$ = createEffect(()=> this._actions$.pipe(
@@ -90,6 +90,24 @@ export class ManageEffects{
             delay(250),
             map(data => fromManageActions.currentPageDataChange({profiles:data}))
         ))
-    ) )
+    ) );
+    createSkill$ = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.createSkill),
+        concatMap(action => this._manageService.createSkill(action.skill).pipe(
+            map(action => fromManageActions.LoadSkills())
+        ))
+    ));
+    getSkill$ = createEffect(()=> this._actions$.pipe(
+        ofType(fromManageActions.getSkillById),
+        concatMap(action => this._manageService.getSkill(action.id).pipe(
+            map(action => fromManageActions.currentSkill({skill:action}))
+        ))
+    ));
+    updateSkill$ = createEffect(() => this._actions$.pipe(
+        ofType(fromManageActions.updateSkill),
+        concatMap((action) => this._manageService.updateSkill(action.skill).pipe(
+            map(action => fromManageActions.LoadSkills())
+        ))
+    ))
    
 }

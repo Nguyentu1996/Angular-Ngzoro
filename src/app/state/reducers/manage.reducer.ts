@@ -15,6 +15,7 @@ export interface ManageState extends EntityState<Profile> {
     skills : Skill[];
     currentPage : Profile[];
     pageSize : number;
+    currentSkill : Skill | null;
 };
 export const adapter: EntityAdapter<Profile> = createEntityAdapter<Profile>();
 
@@ -25,7 +26,8 @@ export const initState : ManageState  = adapter.getInitialState({
     department : [],
     skills:[],
     currentPage : [],
-    pageSize : 0
+    pageSize : 0,
+    currentSkill : null,
 }); 
 
 const manageReducer = createReducer(
@@ -82,7 +84,12 @@ const manageReducer = createReducer(
             ...state,
             pageSize : action.limit
         }
-    })
+    }),
+    on(ManageActions.currentSkill,(state,action)=>({
+        ...state,
+        currentSkill:action.skill
+    }))
+
 );
 export function reducer(state:ManageState|undefined,action:Action){
     return manageReducer(state,action)
