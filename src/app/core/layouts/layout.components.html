@@ -26,7 +26,15 @@
     <nz-layout>
       <nz-header>
         <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="isCollapsed = !isCollapsed"></i>
-      </nz-header>
+        
+        <div style="float: right;">
+          <nz-select style="width: 150px;" [formControl]="code" >
+            <nz-option *ngFor="let option of languages" [nzValue]="option.code" [nzLabel]="option.name"></nz-option>
+          </nz-select>
+          <nz-avatar nzIcon="user">Lo</nz-avatar>     
+        <label style="padding: 10px;" (click)="logout()">logout</label>
+        </div>
+       </nz-header>
       <nz-content>
         <nz-breadcrumb>
           <nz-breadcrumb-item>{{page}}</nz-breadcrumb-item>

@@ -14,4 +14,7 @@ export class StoragesService {
   public getToken(){
     return this.storage.get(STORAGE_KEY);
   }
+  public removeToken(){
+    return this.storage.remove(STORAGE_KEY);
+  }
 }

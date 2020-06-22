@@ -29,4 +29,11 @@ export class AuthEffect{
             catchError((err)=> of(fromAuthActions.loginFail({error:err.message}))
         ))
     )));
+    logout = createEffect(()=> this._actions$.pipe(
+        ofType(fromAuthActions.logout),
+        tap(()=>{
+            this.storage.remove(STORAGE_KEY);
+            this._router.navigateByUrl("/auth");
+        })
+    ))
 }

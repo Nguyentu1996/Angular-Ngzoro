@@ -13,4 +13,7 @@ export const loginSuccess = createAction(
 export const loginFail = createAction(
     "[Auth Page] Login fail",
     props<{error : String}>()
-)
+);
+export const logout = createAction(
+    '[Auth Page] Logout'
+);

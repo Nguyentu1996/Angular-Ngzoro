@@ -10,6 +10,9 @@ import { LayoutComponent } from './layouts/layout.components';
 
 
 import { AntdModule } from '../ng-zoro-antd.module';
+import { StoreModule } from '@ngrx/store';
+import { NzIconsModule } from '../nz-icon.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
  
@@ -17,7 +20,9 @@ import { AntdModule } from '../ng-zoro-antd.module';
      imports: [
         CommonModule,
         RouterModule,
-        AntdModule
+        AntdModule,
+        NzIconsModule,
+        ReactiveFormsModule
      ],
      exports: [],
      declarations: [

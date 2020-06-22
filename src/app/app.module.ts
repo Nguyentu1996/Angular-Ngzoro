@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,9 +18,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NzIconsModule } from './nz-icon.module';
 import { AuthGuardService } from './shared/services/guard/auth-guard.service';
 import { AuthInterceptorService } from './shared/services/interceptor/auth-interceptor.service';
+import { Translate } from './shared/translate.service';
+import { TranslateLoaderModule } from './shared/translates/translateLoader.module';
 
-export function httpTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+export function initLanguage(translateService: Translate): Function {
+  return (): Promise<any> => translateService.initLanguage();
 }
 @NgModule({
   declarations: [
@@ -32,7 +34,7 @@ export function httpTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     // CoreModule,
     NzIconsModule,
-
+    TranslateLoaderModule,
     // AntdModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -42,17 +44,11 @@ export function httpTranslateLoader(http: HttpClient) {
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpTranslateLoader,
-        deps: [HttpClient]
-      }
-    }),
     StorageServiceModule
   ],
   providers: [ AuthGuardService,
              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+             { provide: APP_INITIALIZER, useFactory: initLanguage, multi: true, deps: [Translate] },
   ],
 
   bootstrap: [AppComponent]

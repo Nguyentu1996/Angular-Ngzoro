@@ -23,6 +23,10 @@ const authReducer = createReducer(
         ...state,
         isAuthenticated : false,
         error : action.error
+    })),
+    on(fromActions.logout,(state,action)=>({
+        ...state,
+        isAuthenticated : false
     }))
 );
 export function reducer(state:AuthState | undefined,action:Action){

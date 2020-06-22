@@ -1,5 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SubjectService } from 'src/app/page-features/home/service/data-subject';
+import { StoragesService } from 'src/app/shared/services/storage/storage.service';
+import { Router } from '@angular/router';
+import { Translate } from 'src/app/shared/translate.service';
+import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-main',
@@ -57,16 +62,47 @@ export class LayoutComponent implements OnInit {
     isCollapsed = false;
     page = '';
     pageChild ='';
+    languages = [
+      { code: 'vi',name :"Tiếng việt"},  
+      { code: 'en', name :"English"} 
+    ];
+    currentLanguage : any;
+    code = new FormControl("");
     constructor(
-      private _subjectService : SubjectService
+      private _subjectService : SubjectService,
+      private storage :StoragesService,
+      private router : Router,
+      private translate : Translate
     ) {
       this._subjectService.breadcrumb$.subscribe(data => {
         this.page = data.page;
         this.pageChild = data.pageChild;
-      })
+      });
+      // this.translate.currentlanguage$.subscribe(val=>{
+      //   console.log("Subject",val)
+      //   if(val){
+      //     console.log("CurrentLangSubject",val);
+
+      //     this.currentLanguage = val;
+      //     this.code.setValue({
+      //       code : val
+      //     })
+      //   }
+      // });
+      // debugger;
+      // this.language.setValue({language: this.translate.getCurrentLanguage()});
      }
 
     ngOnInit() { 
-      
+      this.code.valueChanges.subscribe(val => {
+        console.log("CurrentLang",val);
+        if(val != this.currentLanguage){
+          this.translate.changeLanguage(val);
+        }
+      })
+    }
+    logout(){
+      this.storage.removeToken();
+      this.router.navigateByUrl("/auth");
     }
 }

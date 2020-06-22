@@ -1,15 +1,15 @@
-<div >
-  <div class="filter-data">
+<div nz-row >
+  <div  nz-col nzSpan="8">
     <button (click)="createProfile()" [routerLink]="['./actions']" routerLinkActive="router-link-active"  nz-button nzType="primary">
       <!-- <i nz-icon nzType="plus-square" nzTheme="outline"></i> -->
       Create
     </button>
   </div>
-  <div class="filter-data ">
+  <div  nz-col nzSpan="16">
     <input  nz-input placeholder="Search Name" [formControl]="searchByName" />
     <input  nz-input placeholder="Search Email" [formControl]="searchByEmail" />
     <input  nz-input placeholder="Search Address" [formControl]="searchByAddress" />
-
+    <button nz-buton nzType="primary" >Search</button>
     <nz-select class="left-screen"  nzPlaceHolder="Department" [formControl]="filter" >
       <nz-option [nzValue]="" nzLabel="All"></nz-option>
       <nz-option     
